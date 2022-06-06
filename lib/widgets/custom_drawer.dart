@@ -39,7 +39,7 @@ class CustomDrawer extends StatelessWidget {
                       top: 8,
                       left: 0,
                       child: Text(
-                        "Flutter\nTravel",
+                        "Flutter's\nClothing",
                         style: TextStyle(
                             fontSize: 34, fontWeight: FontWeight.bold),
                       ),
