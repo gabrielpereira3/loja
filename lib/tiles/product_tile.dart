@@ -13,8 +13,6 @@ class ProductTile extends StatelessWidget {
       child: Card(
         child: type == "grid"
             ? Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   AspectRatio(
                     aspectRatio: 0.8,
@@ -23,17 +21,28 @@ class ProductTile extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Text(
-                    product.title!,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                  Text(
-                    "R\$ " + product.price.toString(),
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            product.title!,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Text(
+                            "R\$ ${product.price!.toStringAsFixed(2)}",
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
