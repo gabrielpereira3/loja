@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import '../tiles/drawer_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
+  const CustomDrawer(this.pageController, {Key? key}) : super(key: key);
 
   final PageController pageController;
-
-  CustomDrawer(this.pageController);
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +30,8 @@ class CustomDrawer extends StatelessWidget {
             padding: const EdgeInsets.only(left: 32, top: 20),
             children: [
               Container(
-                margin: EdgeInsets.only(bottom: 10),
-                padding: EdgeInsets.fromLTRB(0, 16, 16, 8),
+                margin: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.fromLTRB(0, 16, 16, 8),
                 height: 170,
                 child: Stack(
                   children: [
