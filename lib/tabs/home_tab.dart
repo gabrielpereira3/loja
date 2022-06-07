@@ -43,11 +43,16 @@ class _HomeTabState extends State<HomeTab> {
             ),
             SliverToBoxAdapter(
               child: FutureBuilder<QuerySnapshot>(
-                future: FirebaseFirestore.instance.collection("home").orderBy("pos").get(),
+                future: FirebaseFirestore.instance
+                    .collection("home")
+                    .orderBy("pos")
+                    .get(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
                     );
                   } else {
                     return StaggeredGrid.count(
@@ -56,14 +61,14 @@ class _HomeTabState extends State<HomeTab> {
                       crossAxisSpacing: 4,
                       children: snapshot.data!.docs.map((doc) {
                         return StaggeredGridTile.count(
-                                  crossAxisCellCount: doc["x"],
-                                  mainAxisCellCount: doc["y"],
-                                  child: FadeInImage.memoryNetwork(
-                                    placeholder: kTransparentImage,
-                                    image: doc["image"],
-                                    fit: BoxFit.cover,
-                                  ),
-                                );
+                          crossAxisCellCount: doc["x"],
+                          mainAxisCellCount: doc["y"],
+                          child: FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            image: doc["image"],
+                            fit: BoxFit.cover,
+                          ),
+                        );
                       }).toList(),
                     );
                   }

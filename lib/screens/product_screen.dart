@@ -152,26 +152,36 @@ class _ProductScreenState extends State<ProductScreen> {
                   height: 44,
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: size != null ? MaterialStateProperty.all<Color>(
-                          Theme.of(context).primaryColor) : MaterialStateProperty.all<Color>(Colors.grey.shade300),
+                      backgroundColor: size != null
+                          ? MaterialStateProperty.all<Color>(
+                              Theme.of(context).primaryColor)
+                          : MaterialStateProperty.all<Color>(
+                              Colors.grey.shade300),
                     ),
-                    onPressed: size != null ? (){} : null,
+                    onPressed: size != null ? () {} : null,
                     child: Text(
                       "Adicionar ao carrinho",
-                      style: TextStyle(fontSize: 18, color: size != null ? Colors.white : Colors.grey.shade500),
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: size != null
+                              ? Colors.white
+                              : Colors.grey.shade500),
                     ),
                   ),
-                  // child: TextButton(
-                  //   style: ButtonStyle(
-                  //     backgroundColor: MaterialStateProperty.all<Color>(
-                  //         Theme.of(context).primaryColor),
-                  //   ),
-                  //   onPressed: size != null ? () {} : null,
-                  //   child: const Text(
-                  //     "Adicionar ao carrinho",
-                  //     style: TextStyle(fontSize: 18, color: Colors.white),
-                  //   ),
-                  // ),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  "Descrição",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  product.description!,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
               ],
             ),

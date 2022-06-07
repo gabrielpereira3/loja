@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja/screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:loja/screens/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           primaryColor: const Color.fromARGB(255, 4, 125, 141)
       ),
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
