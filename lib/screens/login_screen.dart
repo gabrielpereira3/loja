@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +26,31 @@ class LoginScreen extends StatelessWidget {
         ],
       ),
       body: Form(
+        key: _formKey,
         child: ListView(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           children: [
             TextFormField(
               decoration: const InputDecoration(hintText: "E-mail"),
               keyboardType: TextInputType.emailAddress,
+              validator: (text) {
+                if(text!.isEmpty || !text.contains("@")) return "E-mail inválido!";
+              },
             ),
             const SizedBox(height: 16),
             TextFormField(
               decoration: const InputDecoration(hintText: "Senha"),
               obscureText: true,
+              validator: (text) {
+                if(text!.isEmpty || text.length < 8) return "Senha inválida!";
+              },
             ),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                style: ButtonStyle(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.zero)),
+                style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        EdgeInsets.zero)),
                 onPressed: () {},
                 child: const Text(
                   "Esqueci minha senha",
@@ -48,46 +59,26 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(
+              height: 44,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Theme.of(context).primaryColor)),
+                onPressed: () {
+                  if(_formKey.currentState!.validate()){
+
+                  }
+                },
+                child: const Text(
+                  "Entrar",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+            ),
           ],
         ),
       ),
-      //   Padding(
-      //   padding: EdgeInsets.all(12),
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.stretch,
-      //     children: [
-      //       TextField(
-      //         decoration: InputDecoration(labelText: "E-mail"),
-      //       ),
-      //       TextField(
-      //         decoration: InputDecoration(labelText: "Senha"),
-      //       ),
-      //       Align(
-      //         alignment: Alignment.centerRight,
-      //         child: TextButton(
-      //           onPressed: () {},
-      //           child: const Text(
-      //             "Esqueci minha senha",
-      //             style: TextStyle(color: Colors.black),
-      //           ),
-      //         ),
-      //       ),
-      //       SizedBox(
-      //         height: 44,
-      //         child: ElevatedButton(
-      //           style: ButtonStyle(
-      //               backgroundColor: MaterialStateProperty.all<Color>(
-      //                   Theme.of(context).primaryColor)),
-      //           onPressed: () {},
-      //           child: const Text(
-      //             "Entrar",
-      //             style: TextStyle(fontSize: 18, color: Colors.white),
-      //           ),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
