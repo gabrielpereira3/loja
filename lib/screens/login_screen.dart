@@ -72,7 +72,26 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                           EdgeInsets.zero)),
-                  onPressed: () {},
+                  onPressed: () {
+                    if(_emailController.text.isEmpty){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Insira seu email para recuperação!"),
+                          backgroundColor: Colors.redAccent,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    } else {
+                      model.recoverPassword(_emailController.text);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text("Confira seu email!"),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          duration: const Duration(seconds: 2),
+                        ),
+                      );
+                    }
+                  },
                   child: const Text(
                     "Esqueci minha senha",
                     style: TextStyle(color: Colors.black),
