@@ -11,36 +11,64 @@ class UserModel extends Model {
 
   bool isLoading = false;
 
-  void signUp({required Map<String, dynamic> userData, required String password,
-    required VoidCallback onSuccess, required VoidCallback onFail}) {
+
+  @override
+  void addListener(VoidCallback listener) {
+    super.addListener(listener);
+
+    _loadCurrentUser();
+  }
+
+  void signUp(
+      {required Map<String, dynamic> userData,
+      required String password,
+      required VoidCallback onSuccess,
+      required VoidCallback onFail}) {
     isLoading = true;
     notifyListeners();
 
-    _auth.createUserWithEmailAndPassword(
+    _auth
+        .createUserWithEmailAndPassword(
       email: userData["email"],
       password: password,
-    ).then((user) async {
+    )
+        .then((user) async {
       firebaseUser = user.user;
 
       await _saveUserData(userData);
       onSuccess();
       isLoading = false;
       notifyListeners();
-    }).catchError((e){
+    }).catchError((e) {
       onFail();
       isLoading = false;
       notifyListeners();
     });
   }
 
-  void signIn() async {
+  void signIn(
+      {required String email,
+      required String password,
+      required VoidCallback onSuccess,
+      required VoidCallback onFail}) async {
     isLoading = true;
     notifyListeners();
 
-    await Future.delayed(const Duration(seconds: 3));
+    _auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((user) async {
+      firebaseUser = user.user;
 
-    isLoading = false;
-    notifyListeners();
+      await _loadCurrentUser();
+
+      onSuccess();
+      isLoading = false;
+      notifyListeners();
+    }).catchError((e) {
+      onFail();
+      isLoading = false;
+      notifyListeners();
+    });
   }
 
   void signOut() async {
@@ -52,15 +80,31 @@ class UserModel extends Model {
     notifyListeners();
   }
 
-  void recoverPass() {
-  }
+  void recoverPass() {}
 
   bool isLoggedIn() {
     return firebaseUser != null;
   }
 
-  Future<void> _saveUserData(Map<String, dynamic> userData) async{
+  Future<void> _saveUserData(Map<String, dynamic> userData) async {
     this.userData = userData;
-    await FirebaseFirestore.instance.collection("users").doc(firebaseUser!.uid).set(userData);
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(firebaseUser!.uid)
+        .set(userData);
+  }
+
+  Future<void> _loadCurrentUser() async {
+    firebaseUser ??= _auth.currentUser;
+    if (firebaseUser != null) {
+      if (userData["name"] == null) {
+        DocumentSnapshot<Map<String, dynamic>> docUser = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(firebaseUser!.uid)
+            .get();
+        userData = docUser.data()!;
+      }
+    }
+    notifyListeners();
   }
 }

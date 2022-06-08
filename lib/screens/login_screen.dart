@@ -4,8 +4,16 @@ import 'package:scoped_model/scoped_model.dart';
 
 import '../models/user_model.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -40,6 +48,7 @@ class LoginScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             children: [
               TextFormField(
+                controller: _emailController,
                 decoration: const InputDecoration(hintText: "E-mail"),
                 keyboardType: TextInputType.emailAddress,
                 validator: (text) {
@@ -49,6 +58,7 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                controller: _passwordController,
                 decoration: const InputDecoration(hintText: "Senha"),
                 obscureText: true,
                 validator: (text) {
@@ -78,7 +88,12 @@ class LoginScreen extends StatelessWidget {
                           Theme.of(context).primaryColor)),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {}
-                    model.signIn();
+                    model.signIn(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        onSuccess: _onSuccess,
+                        onFail: _onFail
+                    );
                   },
                   child: const Text(
                     "Entrar",
@@ -90,6 +105,20 @@ class LoginScreen extends StatelessWidget {
           ),
         );
       }),
+    );
+  }
+
+  void _onSuccess(){
+    Navigator.of(context).pop();
+  }
+
+  void _onFail(){
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Falha ao entrar"),
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 2),
+      ),
     );
   }
 }
