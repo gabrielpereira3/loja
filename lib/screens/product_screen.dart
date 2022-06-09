@@ -1,5 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:loja/datas/cart_product.dart';
+import 'package:loja/models/cart_model.dart';
+import 'package:loja/models/user_model.dart';
+import 'package:loja/screens/cart_screen.dart';
+import 'package:loja/screens/login_screen.dart';
 import '../datas/product_data.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -158,9 +163,33 @@ class _ProductScreenState extends State<ProductScreen> {
                           : MaterialStateProperty.all<Color>(
                               Colors.grey.shade300),
                     ),
-                    onPressed: size != null ? () {} : null,
+                    onPressed: size != null
+                        ? () {
+                            if (UserModel.of(context).isLoggedIn()) {
+                              CartProduct cartProduct = CartProduct();
+                              cartProduct.size = size;
+                              cartProduct.quantity = 1;
+                              cartProduct.pid = product.id;
+                              cartProduct.category = product.category;
+
+                              CartModel.of(context).addCartItem(cartProduct);
+
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => const CartScreen()),
+                              );
+                            } else {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()),
+                              );
+                            }
+                          }
+                        : null,
                     child: Text(
-                      "Adicionar ao carrinho",
+                      UserModel.of(context).isLoggedIn()
+                          ? "Adicionar ao carrinho"
+                          : "Entre para Comprar",
                       style: TextStyle(
                           fontSize: 18,
                           color: size != null

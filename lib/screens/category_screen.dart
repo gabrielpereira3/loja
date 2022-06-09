@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../datas/product_data.dart';
 import '../tiles/product_tile.dart';
 
@@ -49,16 +48,20 @@ class CategoryScreen extends StatelessWidget {
                     ),
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
-                      return ProductTile("grid",
-                          ProductData.fromDocument(snapshot.data!.docs[index]));
+                      ProductData data =
+                          ProductData.fromDocument(snapshot.data!.docs[index]);
+                      data.category = this.snapshot.id;
+                      return ProductTile("grid", data);
                     },
                   ),
                   ListView.builder(
                     padding: const EdgeInsets.all(4),
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
-                      return ProductTile("list",
-                          ProductData.fromDocument(snapshot.data!.docs[index]));
+                      ProductData data =
+                          ProductData.fromDocument(snapshot.data!.docs[index]);
+                      data.category = this.snapshot.id;
+                      return ProductTile("list", data);
                     },
                   ),
                 ],
