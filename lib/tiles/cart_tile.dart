@@ -50,13 +50,17 @@ class CartTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: cartProduct.quantity! > 1
+                            ? () {}
+                            : null,
                         icon: const Icon(Icons.remove),
+                        color: Theme.of(context).primaryColor,
                       ),
                       Text(cartProduct.quantity.toString()),
                       IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.add),
+                        color: Theme.of(context).primaryColor,
                       ),
                       TextButton(
                         onPressed: () {},
