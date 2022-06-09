@@ -4,6 +4,8 @@ import 'package:loja/models/user_model.dart';
 import 'package:loja/screens/login_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+import '../tiles/cart_tile.dart';
+
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
 
@@ -61,8 +63,11 @@ class _CartScreenState extends State<CartScreen> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const LoginScreen()));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      ).then((value) => setState((){}));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
@@ -88,7 +93,15 @@ class _CartScreenState extends State<CartScreen> {
               ),
             );
           } else {
-            return Container();
+            return ListView(
+              children: [
+                Column(
+                  children: model.products.map((product) {
+                    return CartTile(product);
+                  }).toList(),
+                ),
+              ],
+            );
           }
         },
       ),
