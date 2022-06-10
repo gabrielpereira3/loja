@@ -14,8 +14,8 @@ class CartModel extends Model {
   String? couponCode;
   int discountPercentage = 0;
 
-  CartModel(this.user){
-    if(user!.isLoggedIn()){
+  CartModel(this.user) {
+    if (user!.isLoggedIn()) {
       _loadCartItems();
     }
   }
@@ -77,9 +77,81 @@ class CartModel extends Model {
     notifyListeners();
   }
 
-  void setCoupon(String couponCode, int discountPercentage){
+  void setCoupon(String couponCode, int discountPercentage) {
     this.couponCode = couponCode;
     this.discountPercentage = discountPercentage;
+  }
+
+  void updatePrices() {
+    notifyListeners();
+  }
+
+  double getProductsPrice() {
+    double price = 0.0;
+    for (CartProduct c in products) {
+      final productData = c.productData;
+      if (productData != null) {
+        price += c.quantity! * c.productData!.price!;
+      }
+    }
+    return price;
+  }
+
+  double getDiscount() {
+    return getProductsPrice() * discountPercentage / 100;
+  }
+
+  double getShipPrice() {
+    return 9.99;
+  }
+
+  Future<String?> finishOrder() async {
+    if (products.isEmpty) return null;
+
+    isLoading = true;
+    notifyListeners();
+
+    double productsPrice = getProductsPrice();
+    double shipPrice = getShipPrice();
+    double discount = getDiscount();
+
+    DocumentReference refOrder =
+        await FirebaseFirestore.instance.collection("orders").add({
+      "clientId": user!.firebaseUser!.uid,
+      "products": products.map((cartProduct) => cartProduct.toMap()).toList(),
+      "shipPrice": shipPrice,
+      "productsPrice": productsPrice,
+      "discount": discount,
+      "totalPrice": productsPrice - discount + shipPrice,
+      "status": 1
+    });
+
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.firebaseUser!.uid)
+        .collection("orders")
+        .doc(refOrder.id)
+        .set({});
+
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.firebaseUser!.uid)
+        .collection("cart")
+        .get();
+
+    for(DocumentSnapshot doc in query.docs){
+      doc.reference.delete();
+    }
+
+    products.clear();
+
+    couponCode = null;
+    discountPercentage = 0;
+    isLoading = false;
+
+    notifyListeners();
+
+    return refOrder.id;
   }
 
   void _loadCartItems() async {

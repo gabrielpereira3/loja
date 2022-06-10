@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:loja/models/cart_model.dart';
 import 'package:loja/models/user_model.dart';
 import 'package:loja/screens/login_screen.dart';
+import 'package:loja/widgets/cart_price.dart';
 import 'package:loja/widgets/discount_card.dart';
+import 'package:loja/widgets/ship_card.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import '../tiles/cart_tile.dart';
@@ -102,6 +104,13 @@ class _CartScreenState extends State<CartScreen> {
                   }).toList(),
                 ),
                 const DiscountCard(),
+                const ShipCard(),
+                CartPrice(() async {
+                  String? orderId = await model.finishOrder();
+                  if(orderId != null){
+                    print(orderId);
+                  }
+                }),
               ],
             );
           }

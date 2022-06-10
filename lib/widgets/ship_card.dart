@@ -5,6 +5,32 @@ class ShipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: ExpansionTile(
+        title: const Text(
+          "Calcular o frete",
+          textAlign: TextAlign.start,
+          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
+        ),
+        iconColor: Theme.of(context).primaryColor,
+        leading: const Icon(Icons.location_on),
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Digite seu CEP",
+              ),
+              initialValue: "",
+              onFieldSubmitted: (text) {
+
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
