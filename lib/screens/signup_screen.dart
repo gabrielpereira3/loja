@@ -125,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void _onFail(){
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text("Falha ao criar do usuário!"),
+        content: Text("Falha ao criar o usuário!"),
         backgroundColor: Colors.redAccent,
         duration: Duration(seconds: 2),
       ),

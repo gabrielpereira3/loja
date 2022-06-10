@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loja/models/cart_model.dart';
 import 'package:loja/models/user_model.dart';
 import 'package:loja/screens/login_screen.dart';
+import 'package:loja/screens/order_screen.dart';
 import 'package:loja/widgets/cart_price.dart';
 import 'package:loja/widgets/discount_card.dart';
 import 'package:loja/widgets/ship_card.dart';
@@ -30,12 +31,12 @@ class _CartScreenState extends State<CartScreen> {
             alignment: Alignment.center,
             child: ScopedModelDescendant<CartModel>(
                 builder: (context, child, model) {
-                  int p = model.products.length;
-                  return Text(
-                    "${p ?? 0} ${p == 1 ? "ITEM" : "ITENS"}",
-                    style: const TextStyle(fontSize: 17),
-                  );
-                }),
+              int p = model.products.length;
+              return Text(
+                "${p ?? 0} ${p == 1 ? "ITEM" : "ITENS"}",
+                style: const TextStyle(fontSize: 17),
+              );
+            }),
           )
         ],
       ),
@@ -66,11 +67,13 @@ class _CartScreenState extends State<CartScreen> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      ).then((value) => setState((){}));
+                      Navigator.of(context)
+                          .push(
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          )
+                          .then((value) => setState(() {}));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
@@ -105,12 +108,17 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 const DiscountCard(),
                 const ShipCard(),
-                CartPrice(() async {
-                  String? orderId = await model.finishOrder();
-                  if(orderId != null){
-                    print(orderId);
-                  }
-                }),
+                CartPrice(
+                  () async {
+                    String? orderId = await model.finishOrder();
+                    if (orderId != null) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                            builder: (context) => OrderScreen(orderId)),
+                      );
+                    }
+                  },
+                ),
               ],
             );
           }
