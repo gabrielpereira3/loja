@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loja/models/cart_model.dart';
 import 'package:loja/models/user_model.dart';
 import 'package:loja/screens/login_screen.dart';
+import 'package:loja/widgets/discount_card.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import '../tiles/cart_tile.dart';
@@ -100,6 +101,7 @@ class _CartScreenState extends State<CartScreen> {
                     return CartTile(product);
                   }).toList(),
                 ),
+                const DiscountCard(),
               ],
             );
           }
