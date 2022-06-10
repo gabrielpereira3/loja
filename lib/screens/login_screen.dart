@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => SignUpScreen()));
+                  MaterialPageRoute(builder: (context) => const SignUpScreen()));
             },
             child: const Text(
               "CRIAR CONTA",
@@ -52,8 +52,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: const InputDecoration(hintText: "E-mail"),
                 keyboardType: TextInputType.emailAddress,
                 validator: (text) {
-                  if (text!.isEmpty || !text.contains("@"))
+                  if (text!.isEmpty || !text.contains("@")) {
                     return "E-mail inválido!";
+                  }
                 },
               ),
               const SizedBox(height: 16),
@@ -62,8 +63,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: const InputDecoration(hintText: "Senha"),
                 obscureText: true,
                 validator: (text) {
-                  if (text!.isEmpty || text.length < 8)
+                  if (text!.isEmpty || text.length < 8) {
                     return "Senha inválida!";
+                  }
                 },
               ),
               Align(
