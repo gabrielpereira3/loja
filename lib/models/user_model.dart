@@ -7,7 +7,7 @@ class UserModel extends Model {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   User? firebaseUser;
-  Map<String, dynamic> userData = Map();
+  Map<String, dynamic> userData = {};
 
   bool isLoading = false;
 
@@ -76,7 +76,7 @@ class UserModel extends Model {
   void signOut() async {
     await _auth.signOut();
 
-    userData = Map();
+    userData = {};
     firebaseUser = null;
 
     notifyListeners();

@@ -39,7 +39,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _nameController,
                   decoration: const InputDecoration(hintText: "Nome Completo"),
                   validator: (text) {
-                    if (text!.isEmpty) return "Nome inválido!";
+                    if (text!.isEmpty) {
+                      return "Nome inválido!";
+                    } else {
+                      return "";
+                    }
                   },
                 ),
                 const SizedBox(height: 16),
@@ -48,8 +52,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   decoration: const InputDecoration(hintText: "E-mail"),
                   keyboardType: TextInputType.emailAddress,
                   validator: (text) {
-                    if (text!.isEmpty || !text.contains("@"))
+                    if (text!.isEmpty || !text.contains("@")) {
                       return "E-mail inválido!";
+                    } else {
+                      return "";
+                    }
                   },
                 ),
                 const SizedBox(height: 16),
@@ -58,8 +65,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   decoration: const InputDecoration(hintText: "Senha"),
                   obscureText: true,
                   validator: (text) {
-                    if (text!.isEmpty || text.length < 8)
+                    if (text!.isEmpty || text.length < 8) {
                       return "Senha inválida!";
+                    } else {
+                      return "";
+                    }
                   },
                 ),
                 const SizedBox(height: 16),
@@ -67,7 +77,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _addressController,
                   decoration: const InputDecoration(hintText: "Endereço"),
                   validator: (text) {
-                    if (text!.isEmpty) return "Endereço inválido!";
+                    if (text!.isEmpty) {
+                      return "Endereço inválido!";
+                    } else {
+                      return "";
+                    }
                   },
                 ),
                 const SizedBox(height: 16),

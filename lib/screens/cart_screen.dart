@@ -33,7 +33,7 @@ class _CartScreenState extends State<CartScreen> {
                 builder: (context, child, model) {
               int p = model.products.length;
               return Text(
-                "${p ?? 0} ${p == 1 ? "ITEM" : "ITENS"}",
+                "$p ${p == 1 ? "ITEM" : "ITENS"}",
                 style: const TextStyle(fontSize: 17),
               );
             }),

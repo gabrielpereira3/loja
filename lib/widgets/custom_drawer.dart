@@ -75,7 +75,7 @@ class CustomDrawer extends StatelessWidget {
                                 ),
                                 onTap: (){
                                   !model.isLoggedIn()
-                                    ? Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen()))
+                                    ? Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginScreen()))
                                     : model.signOut();
                                 },
                               ),

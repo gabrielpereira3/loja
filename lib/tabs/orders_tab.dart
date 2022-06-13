@@ -32,8 +32,6 @@ class _OrdersTabState extends State<OrdersTab> {
           }
         },
       );
-
-      return Container();
     } else {
       return Container(
         padding: const EdgeInsets.all(16),

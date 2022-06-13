@@ -14,11 +14,11 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     Widget _buildBodyBack() => Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color.fromARGB(255, 208, 130, 47),
-                Color.fromARGB(255, 186, 173, 158),
+                Theme.of(context).primaryColor,
+                const Color.fromARGB(255, 13, 201, 218),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,

@@ -39,9 +39,9 @@ class OrderTile extends StatelessWidget {
                       _buildProductsText(snapshot.data!),
                     ),
                     const SizedBox(height: 4),
-                    Text(
+                    const Text(
                       "Status do pedido:",
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 4),
                     Row(

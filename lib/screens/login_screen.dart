@@ -54,6 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 validator: (text) {
                   if (text!.isEmpty || !text.contains("@")) {
                     return "E-mail inválido!";
+                  } else {
+                    return "";
                   }
                 },
               ),
@@ -65,6 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 validator: (text) {
                   if (text!.isEmpty || text.length < 8) {
                     return "Senha inválida!";
+                  } else {
+                    return null;
                   }
                 },
               ),

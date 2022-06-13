@@ -209,7 +209,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 ),
                 Text(
                   product.description!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),
