@@ -5,9 +5,14 @@ import 'package:loja/models/user_model.dart';
 import '../screens/login_screen.dart';
 import '../tiles/order_tile.dart';
 
-class OrdersTab extends StatelessWidget {
+class OrdersTab extends StatefulWidget {
   const OrdersTab({Key? key}) : super(key: key);
 
+  @override
+  State<OrdersTab> createState() => _OrdersTabState();
+}
+
+class _OrdersTabState extends State<OrdersTab> {
   @override
   Widget build(BuildContext context) {
     if (UserModel.of(context).isLoggedIn()) {
@@ -54,7 +59,7 @@ class OrdersTab extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => const LoginScreen(),
                   ),
-                );
+                ).then((value) => setState(() {}));
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
