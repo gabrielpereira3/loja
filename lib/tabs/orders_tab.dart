@@ -27,7 +27,7 @@ class _OrdersTabState extends State<OrdersTab> {
             );
           } else {
             return ListView(
-              children: snapshot.data!.docs.map((doc) => OrderTile(doc.id)).toList(),
+              children: snapshot.data!.docs.map((doc) => OrderTile(doc.id)).toList().reversed.toList(),
             );
           }
         },
